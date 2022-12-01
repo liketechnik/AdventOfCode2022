@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Florian Warzecha <liketechnik@disroot.org>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 {
   description = "dependencies for my AoC 2022 solutions";
 
