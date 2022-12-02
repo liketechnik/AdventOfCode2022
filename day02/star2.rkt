@@ -60,5 +60,85 @@
 (define (score round)
   (+ (outcome-score round) (shape-score round)))
 
-(display (foldl + 0 (map score (read-file "input"))))
-#| (display (map outcome-score (read-file "simple"))) |#
+(define (total-score rounds)
+  (foldl + 0 (map score rounds)))
+
+(module+ main
+  (display (total-score (read-file "input"))))
+
+(module+ test
+  (require rackunit)
+
+  (check-equal?
+    (losing-shape 'rock)
+    'scissors)
+  (check-equal?
+    (losing-shape 'scissors)
+    'paper)
+  (check-equal?
+    (losing-shape 'paper)
+    'rock)
+
+  (check-equal?
+    (winning-shape 'scissors)
+    'rock)
+  (check-equal?
+    (winning-shape 'paper)
+    'scissors)
+  (check-equal?
+    (winning-shape 'rock)
+    'paper)
+
+  (check-equal?
+    (string->hint '("A" "X"))
+    '(rock lose))
+
+  (check-equal? 
+    (reverse (read-file "simple")) 
+    '((rock draw) (paper lose) (scissors win)))
+
+  (check-equal?
+    (hint->shape '(rock draw))
+    'rock)
+  (check-equal?
+    (hint->shape '(paper lose))
+    'rock)
+  (check-equal?
+    (hint->shape '(scissors win))
+    'rock)
+
+  (check-equal?
+    (shape-score '(rock draw))
+    1)
+  (check-equal?
+    (shape-score '(paper lose))
+    1)
+  (check-equal?
+    (shape-score '(scissors win))
+    1)
+
+  (check-equal?
+    (outcome-score '(rock draw))
+    3)
+  (check-equal?
+    (outcome-score '(paper lose))
+    0)
+  (check-equal?
+    (outcome-score '(scissors win))
+    6)
+
+  (check-equal?
+    (score '(rock draw))
+    4)
+  (check-equal?
+    (score '(paper lose))
+    1)
+  (check-equal?
+    (score '(scissors win))
+    7)
+
+  (check-equal?
+    (total-score '((rock draw) (paper lose) (scissors win)))
+    12)
+
+  )
